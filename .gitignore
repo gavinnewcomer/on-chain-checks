@@ -1,0 +1,11 @@
+node_modules/*
+.DS_STORE
+artifacts/*
+cache/*
+keys/*
+*/artifacts/*
+*/cache/*
+contracts/tokens/artifacts/*
+contracts/utils/artifacts/*
+scripts/*
+.deps/*
