@@ -10,7 +10,7 @@ contract Renderer {
     string[] colors;
     string svg;
 
-    function initializeContract (
+    function initializeSVG(
         string[] memory _colors,
         string memory _svg
     ) internal {

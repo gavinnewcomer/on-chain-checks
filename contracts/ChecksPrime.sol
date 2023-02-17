@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import { Renderer } from "../utils/Renderer.sol";
-import { Base64 } from "../utils/Base64.sol";
-import { LibString } from "../utils/LibString.sol";
-import { Ownable } from "../utils/Ownable.sol";
-import { ERC721 } from "./ERC721.sol";
+import { Renderer } from "./utils/Renderer.sol";
+import { Base64 } from "./utils/Base64.sol";
+import { LibString } from "./utils/LibString.sol";
+import { Ownable } from "./utils/Ownable.sol";
 
-contract ChecksPrime is ERC721, Renderer, Ownable {
+contract ChecksPrime is Renderer, Ownable {
 
     error ImageAlreadyMinted();
     error AlreadyInitialized();
@@ -19,7 +18,7 @@ contract ChecksPrime is ERC721, Renderer, Ownable {
         owner = msg.sender;
     }
 
-    function tokenURI(uint256 tokenId) public override view returns (string memory) {
+    function readAsset(uint256 tokenId) internal view returns (string memory) {
         return
             string.concat(
                 "data:application/json;base64,",
@@ -44,20 +43,5 @@ contract ChecksPrime is ERC721, Renderer, Ownable {
             revert ImageAlreadyMinted();
         }
         seedPack[tokenId] = uint256(keccak256(abi.encodePacked(tokenId ^ block.number ^ block.gaslimit ^ block.timestamp)));
-        super._safeMint(msg.sender, tokenId);
-    }
-
-    function initalizeContract( 
-        string memory name_,
-        string memory symbol_,
-        string[] memory _colors,
-        string memory _svg
-    ) public onlyOwner {
-        if (initialized) {
-            revert AlreadyInitialized();
-        }
-        initializeContract(_colors, _svg);
-        initalizeTokenContract(name_, symbol_);
-        initialized = true;
     }
 }
