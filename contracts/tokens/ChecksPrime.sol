@@ -10,6 +10,8 @@ import { ERC721 } from "./ERC721.sol";
 contract ChecksPrime is ERC721, Renderer, Ownable {
 
     error ImageAlreadyMinted();
+    error AlreadyInitialized();
+    error NotInitialized();
 
     bool internal initialized = false;
 
@@ -32,6 +34,12 @@ contract ChecksPrime is ERC721, Renderer, Ownable {
     }
     
     function mintImage(uint256 tokenId) public {
+        if (colors.length == 0) {
+            revert NotInitialized();
+        }
+        if (bytes(svg).length == 0) {
+            revert NotInitialized();
+        }
         if (seedPack[tokenId] != 0) {
             revert ImageAlreadyMinted();
         }

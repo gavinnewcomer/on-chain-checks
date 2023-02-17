@@ -9,8 +9,6 @@ contract Renderer {
     mapping (uint256 => uint256) public seedPack;
     string[] colors;
     string svg;
-    
-    error AlreadyInitialized();
 
     function initializeContract (
         string[] memory _colors,
